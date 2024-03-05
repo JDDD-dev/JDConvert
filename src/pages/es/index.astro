@@ -1,10 +1,13 @@
 ---
 import BytesToString from "@/components/bytesToString"
+import { getLangFromUrl } from "@/i18n/utils";
 import Layout from "@/layouts/Layout.astro"
+
+const lang = getLangFromUrl(Astro.url);
 ---
 
 <Layout title="Convierte ahora!">
 	<main class="absolute w-full">
-		<BytesToString client:load />
+		<BytesToString lang={lang} client:load />
 	</main>
 </Layout>

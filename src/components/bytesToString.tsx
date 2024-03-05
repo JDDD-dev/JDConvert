@@ -8,12 +8,20 @@ import {
 	SelectLabel,
 	SelectTrigger,
 	SelectValue,
-} from "./ui/select"
+} from "@/components/ui/select"
+import { useTranslations } from "@/i18n/utils"
+import type { ui } from "@/i18n/ui"
 
-export default function BytesToString() {
+interface Props {
+	lang: keyof typeof ui
+}
+
+export default function BytesToString({ lang }: Props) {
 	const [decoded, setDecoded] = useState("")
 	const [inputFormat, setInputFormat] = useState("hex")
 	const [encodedText, setEncodedText] = useState("")
+
+	const t = useTranslations(lang)
 
 	useEffect(() => {
 		convertBytesToString(encodedText)
@@ -52,7 +60,7 @@ export default function BytesToString() {
 	return (
 		<>
 			<Textarea
-				placeholder="Type your encoded message here."
+				placeholder={t("bytesToString.input")}
 				onChangeCapture={(e) => setEncodedText(e.currentTarget.value)}
 			/>
 			<Textarea value={decoded} readOnly />
@@ -62,10 +70,10 @@ export default function BytesToString() {
 				</SelectTrigger>
 				<SelectContent>
 					<SelectGroup>
-						<SelectLabel>Select input format</SelectLabel>
-						<SelectItem value="hex">Hexadecimal</SelectItem>
-						<SelectItem value="decimal">Decimal</SelectItem>
-						<SelectItem value="octal">Octal</SelectItem>
+						<SelectLabel>{t("bytesToString.selectLabel")}</SelectLabel>
+						<SelectItem value="hex">{t("bytesToString.hex")}</SelectItem>
+						<SelectItem value="decimal">{t("bytesToString.decimal")}</SelectItem>
+						<SelectItem value="octal">{t("bytesToString.octal")}</SelectItem>
 					</SelectGroup>
 				</SelectContent>
 			</Select>
