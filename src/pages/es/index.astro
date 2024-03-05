@@ -1,12 +1,14 @@
 ---
 import BytesToString from "@/components/bytesToString"
-import { getLangFromUrl } from "@/i18n/utils";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 import Layout from "@/layouts/Layout.astro"
 
 const lang = getLangFromUrl(Astro.url);
+
+const t = useTranslations(lang)
 ---
 
-<Layout title="Convierte ahora!">
+<Layout title={t("index.title")} description={t("index.description")}>
 	<main class="absolute w-full">
 		<BytesToString lang={lang} client:load />
 	</main>
