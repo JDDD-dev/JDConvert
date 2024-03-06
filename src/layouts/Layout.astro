@@ -6,9 +6,10 @@ import { getLangFromUrl } from "@/i18n/utils"
 
 interface Props {
 	title: string
+	description: string
 }
 
-const { title } = Astro.props
+const { title, description } = Astro.props
 
 const lang = getLangFromUrl(Astro.url)
 ---
@@ -17,7 +18,7 @@ const lang = getLangFromUrl(Astro.url)
 <html lang={lang}>
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Convert anything you need!" />
+		<meta name="description" content={description} />
 		<meta name="keywords" content="convert, transform"/>
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
