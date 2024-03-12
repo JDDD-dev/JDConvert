@@ -14,6 +14,8 @@ export const ui = {
 		"bytesToString.hex": "Hexadecimal",
 		"bytesToString.decimal": "Decimal",
 		"bytesToString.octal": "Octal",
+		"index.bytesToString.title": "Bytes to Text",
+		"index.bytesToString.description": "Decode hex, decimal or octal messages",
 	},
 	es: {
 		"index.title": "Convierte ahora!",
@@ -23,5 +25,7 @@ export const ui = {
 		"bytesToString.hex": "Hexadecimal",
 		"bytesToString.decimal": "Decimal",
 		"bytesToString.octal": "Octal",
+		"index.bytesToString.title": "Bytes a Texto",
+		"index.bytesToString.description": "Traduce mensajes en hexadecimal, decimal o octal",
 	},
 } as const
