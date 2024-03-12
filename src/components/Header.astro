@@ -1,5 +1,6 @@
 ---
 import { getLangFromUrl, useTranslations } from "@/i18n/utils"
+import { getRelativeLocaleUrl } from "astro:i18n"
 
 const lang = getLangFromUrl(Astro.url)
 
@@ -7,5 +8,7 @@ const t = useTranslations(lang)
 ---
 
 <header class="flex content-center">
-	<h1 class="m-10 text-center text-9xl dark:text-gray-400">{t("index.title")}</h1>
+	<a href={getRelativeLocaleUrl(lang)}>
+		<h1 class="m-10 text-center text-9xl dark:text-gray-400">{t("index.title")}</h1>
+	</a>
 </header>
