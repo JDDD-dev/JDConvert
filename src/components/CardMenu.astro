@@ -1,0 +1,43 @@
+---
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { ui } from "@/i18n/ui"
+import { useTranslations } from "@/i18n/utils"
+
+interface Props {
+	lang: keyof typeof ui
+}
+
+const { lang } = Astro.props
+
+const t = useTranslations(lang)
+---
+
+<div class="grid grid-cols-1 gap-8 p-5 md:grid-cols-3">
+	<Card onClick={() => console.log("test")}>
+		<CardHeader>
+			<CardTitle>{t("index.title")}</CardTitle>
+			<CardDescription>Un conversor pero muy guapo</CardDescription>
+		</CardHeader>
+		<CardContent>
+			<p>Test</p>
+		</CardContent>
+	</Card>
+	<Card onClick={() => console.log("test")}>
+		<CardHeader>
+			<CardTitle>{t("index.title")}</CardTitle>
+			<CardDescription>Un conversor pero muy guapo</CardDescription>
+		</CardHeader>
+		<CardContent>
+			<p>Test</p>
+		</CardContent>
+	</Card>
+	<Card onClick={() => console.log("test")}>
+		<CardHeader>
+			<CardTitle>{t("index.title")}</CardTitle>
+			<CardDescription>Un conversor pero muy guapo</CardDescription>
+		</CardHeader>
+		<CardContent>
+			<p>Test</p>
+		</CardContent>
+	</Card>
+</div>

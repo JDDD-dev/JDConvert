@@ -16,7 +16,7 @@ interface Props {
 	lang: keyof typeof ui
 }
 
-export default function BytesToString({ lang }: Props) {
+export default function BytesToStringComponent({ lang }: Props) {
 	const [decoded, setDecoded] = useState("")
 	const [inputFormat, setInputFormat] = useState("hex")
 	const [encodedText, setEncodedText] = useState("")
