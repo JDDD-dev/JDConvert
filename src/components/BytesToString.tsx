@@ -58,14 +58,15 @@ export default function BytesToStringComponent({ lang }: Props) {
 	}
 
 	return (
-		<>
+		<div className="p-5">
 			<Textarea
 				placeholder={t("bytesToString.input")}
 				onChangeCapture={(e) => setEncodedText(e.currentTarget.value)}
+				className="mb-5 resize-none"
 			/>
-			<Textarea value={decoded} readOnly />
+			<Textarea value={decoded} readOnly className="mt-5 resize-none" />
 			<Select defaultValue="hex" onValueChange={(value) => setInputFormat(value)}>
-				<SelectTrigger className="w-[180px]">
+				<SelectTrigger className="mt-5 w-[180px]">
 					<SelectValue></SelectValue>
 				</SelectTrigger>
 				<SelectContent>
@@ -77,6 +78,6 @@ export default function BytesToStringComponent({ lang }: Props) {
 					</SelectGroup>
 				</SelectContent>
 			</Select>
-		</>
+		</div>
 	)
 }
