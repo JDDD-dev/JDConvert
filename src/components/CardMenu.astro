@@ -14,7 +14,7 @@ const { lang } = Astro.props
 const t = useTranslations(lang)
 ---
 
-<div class="grid w-auto grid-cols-1 gap-8 p-5 md:grid-cols-3">
+<div class="grid w-full grid-cols-1 gap-8 p-5 md:grid-cols-3">
 	<Card>
 		<a href={getRelativeLocaleUrl(lang, "bytesToString")}>
 			<CardHeader>
