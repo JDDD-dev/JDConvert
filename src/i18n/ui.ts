@@ -8,8 +8,9 @@ export const defaultLang = "en"
 export const ui = {
 	en: {
 		"index.title": "JDConvert",
-		"index.description": "Convert anything you need!",
-		"index.subtitle": "Just convert anything you need but the easy way!",
+		"index.description": "Format conversion tool made easy",
+		"index.subtitle1": "Format conversion tool,",
+		"index.subtitle2": "but the easy way",
 		"bytesToString.input": "Type your encoded message here.",
 		"bytesToString.selectLabel": "Select input format",
 		"bytesToString.hex": "Hexadecimal",
@@ -20,8 +21,9 @@ export const ui = {
 	},
 	es: {
 		"index.title": "JDConvert",
-		"index.description": "Convierte cualquier cosa!",
-		"index.subtitle": "Convierte cualquier cosa pero de forma sencilla!",
+		"index.description": "Convierte cualquier cosa",
+		"index.subtitle1": "Conversión de formatos,",
+		"index.subtitle2": "pero sencillo",
 		"bytesToString.input": "Escribe tu mensaje cifrado aquí.",
 		"bytesToString.selectLabel": "Selecciona un formato",
 		"bytesToString.hex": "Hexadecimal",
