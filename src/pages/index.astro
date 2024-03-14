@@ -9,5 +9,8 @@ const t = useTranslations(lang)
 ---
 
 <Layout title={t("index.title")} description={t("index.description")}>
-	<CardMenu lang={lang} />
+	<div class="relative flex h-full w-auto flex-col items-center p-5">
+		<h2 class="m-10 w-1/2 text-center text-7xl font-semibold">{t("index.subtitle")}</h2>
+		<CardMenu lang={lang} />
+	</div>
 </Layout>
