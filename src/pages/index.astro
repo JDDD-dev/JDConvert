@@ -1,15 +1,23 @@
 ---
-import BytesToString from "@/components/bytesToString"
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import CardMenu from "@/components/CardMenu.astro"
+import { getLangFromUrl, useTranslations } from "@/i18n/utils"
 import Layout from "@/layouts/Layout.astro"
 
-const lang = getLangFromUrl(Astro.url);
+const lang = getLangFromUrl(Astro.url)
 
 const t = useTranslations(lang)
 ---
 
 <Layout title={t("index.title")} description={t("index.description")}>
-	<main class="absolute w-full">
-		<BytesToString lang={lang} client:load  />
-	</main>
+	<div class="relative flex h-full w-full flex-col items-center p-5">
+		<h2
+			class="m-10 w-auto max-w-md whitespace-break-spaces bg-gradient-to-r from-teal-800 to-teal-300 bg-clip-text text-center text-5xl font-semibold text-transparent sm:text-6xl"
+		>
+			{t("index.subtitle1")}
+			<span class="bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent"
+				>{t("index.subtitle2")}</span
+			>
+		</h2>
+		<CardMenu lang={lang} />
+	</div>
 </Layout>

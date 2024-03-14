@@ -1,0 +1,33 @@
+---
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { ui } from "@/i18n/ui"
+import { useTranslations } from "@/i18n/utils"
+import { getRelativeLocaleUrl } from "astro:i18n"
+import { ArrowDown01 } from "lucide-react"
+
+interface Props {
+	lang: keyof typeof ui
+}
+
+const { lang } = Astro.props
+
+const t = useTranslations(lang)
+---
+
+<div class="grid w-full grid-cols-1 gap-8 p-5 md:grid-cols-3">
+	<Card>
+		<a href={getRelativeLocaleUrl(lang, "bytesToString")}>
+			<CardHeader>
+				<CardTitle
+					><ArrowDown01 className="m-1 mb-2 scale-150" name="Bytes To Text icon" /></CardTitle
+				>
+				<CardDescription className="text-2xl font-cardtitle text-gray-800 dark:text-white"
+					>{t("index.bytesToString.title")}</CardDescription
+				>
+			</CardHeader>
+			<CardContent>
+				<p class="dark:text-gray-300">{t("index.bytesToString.description")}</p>
+			</CardContent>
+		</a>
+	</Card>
+</div>

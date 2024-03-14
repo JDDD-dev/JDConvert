@@ -1,0 +1,13 @@
+---
+import { getLangFromUrl, useTranslations } from "@/i18n/utils"
+import Layout from "@/layouts/Layout.astro"
+import BytesToStringComponent from "@/components/BytesToString"
+
+const lang = getLangFromUrl(Astro.url)
+
+const t = useTranslations(lang)
+---
+
+<Layout title={t("index.title")} description={t("index.description")}>
+	<BytesToStringComponent client:load lang={lang} />
+</Layout>
