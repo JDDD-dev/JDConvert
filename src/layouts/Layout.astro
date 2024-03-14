@@ -32,8 +32,8 @@ const lang = getLangFromUrl(Astro.url)
 			class="absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] dark:bg-neutral-950"
 		>
 		</div>
-		<main class="relative h-full min-h-svh w-full">
-			<div class="relative h-full min-h-svh pb-10">
+		<main class="relative h-full min-h-dvh w-full">
+			<div class="relative h-full min-h-dvh pb-10">
 				<Header />
 				<slot />
 				<Footer />
@@ -47,7 +47,7 @@ const lang = getLangFromUrl(Astro.url)
 	body {
 		height: 100%;
 		display: flex;
-		min-height: 100svh;
+		min-height: 100dvh;
 	}
 
 	html {
