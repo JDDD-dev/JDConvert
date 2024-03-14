@@ -66,6 +66,16 @@ export default {
 				"accordion-down": "accordion-down 0.2s ease-out",
 				"accordion-up": "accordion-up 0.2s ease-out",
 			},
+			scale: {
+				103: "1.03",
+				200: "2.00",
+			},
+			fontWeight: {
+				cardtitle: "650",
+			},
+			fontSize: {
+				title: ["3.2rem", "3.25rem"],
+			},
 		},
 	},
 	plugins: [require("tailwindcss-animate")],

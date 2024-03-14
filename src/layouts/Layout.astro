@@ -3,7 +3,8 @@ import Header from "@/components/Header.astro"
 import Footer from "@/components/Footer.astro"
 import "@/styles/globals.css"
 import { getLangFromUrl } from "@/i18n/utils"
-import  SpeedInsights  from "@vercel/speed-insights/astro"
+import "@fontsource-variable/quicksand"
+import SpeedInsights from "@vercel/speed-insights/astro"
 
 interface Props {
 	title: string
@@ -20,30 +21,37 @@ const lang = getLangFromUrl(Astro.url)
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
-		<meta name="keywords" content="convert, transform"/>
+		<meta name="keywords" content="convert, transform" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
 	<body>
-		<div class="relative h-full w-full bg-slate-950">
-			<div
-				class="absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"
-			>
-			</div>
+		<div
+			class="absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] dark:bg-neutral-950"
+		>
 		</div>
-		<Header />
-		<slot />
-		<Footer />
+		<main class="relative h-full min-h-dvh w-full">
+			<div class="relative h-full min-h-dvh pb-10">
+				<Header />
+				<slot />
+				<Footer />
+			</div>
+		</main>
 		<SpeedInsights />
 	</body>
 </html>
 
 <style is:global>
 	body {
-		height: 100vh;
+		height: 100%;
 		display: flex;
+		min-height: 100dvh;
+	}
+
+	html {
+		font-family: "Quicksand Variable", system-ui, sans-serif;
 	}
 </style>
 
