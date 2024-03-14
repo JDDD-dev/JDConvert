@@ -73,6 +73,9 @@ export default {
 			fontWeight: {
 				cardtitle: "650",
 			},
+			fontSize: {
+				title: ["3.2rem", "3.25rem"],
+			},
 		},
 	},
 	plugins: [require("tailwindcss-animate")],
