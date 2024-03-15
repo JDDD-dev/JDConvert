@@ -18,6 +18,8 @@ export const ui = {
 		"bytesToString.octal": "Octal",
 		"index.bytesToString.title": "Bytes to Text",
 		"index.bytesToString.description": "Decode hex, decimal or octal messages",
+		"index.img2pdf.title": "Images to PDF",
+		"index.img2pdf.description": "Join several images into one PDF",
 	},
 	es: {
 		"index.title": "JDConvert",
@@ -30,6 +32,8 @@ export const ui = {
 		"bytesToString.decimal": "Decimal",
 		"bytesToString.octal": "Octal",
 		"index.bytesToString.title": "Bytes a Texto",
-		"index.bytesToString.description": "Traduce mensajes en hexadecimal, decimal o octal",
+		"index.bytesToString.description": "Traduce desde hexadecimal, decimal o octal",
+		"index.img2pdf.title": "Imágenes a PDF",
+		"index.img2pdf.description": "Une varias imagenes en un PDF",
 	},
 } as const
