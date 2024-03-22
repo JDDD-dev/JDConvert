@@ -58,7 +58,7 @@ export default function BytesToStringComponent({ lang }: Props) {
 	}
 
 	return (
-		<div className="p-5">
+		<div className="p-5 pt-14">
 			<Textarea
 				placeholder={t("bytesToString.input")}
 				onChangeCapture={(e) => setEncodedText(e.currentTarget.value)}
