@@ -4,7 +4,7 @@ import { useDragAndDrop } from "@formkit/drag-and-drop/react"
 import { animations } from "@formkit/drag-and-drop"
 import { FileDown, Trash2 } from "lucide-react"
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib"
-import { useEffect, useState } from "react"
+import { startTransition, useEffect, useState } from "react"
 
 interface Props {
 	lang: keyof typeof ui
@@ -47,15 +47,6 @@ export default function PdfCreatorComponent({ lang }: Props) {
 		const pdfDoc = await PDFDocument.create()
 
 		pdfDoc.setTitle("GENERATED-PDF")
-
-		/*
-		const donorPdfBytes = await pdfs[0].arrayBuffer()
-
-		const donorPdf = await PDFDocument.load(donorPdfBytes)
-		const [copiedPages] = await pdfDoc.copyPages(donorPdf, [0])
-
-		pdfDoc.addPage(copiedPages)
-		*/
 
 		if (pdfs.length === 0) {
 			const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman)
@@ -113,7 +104,12 @@ export default function PdfCreatorComponent({ lang }: Props) {
 			}
 		}
 
-		setPdfUrl(await pdfDoc.saveAsBase64({ dataUri: true }))
+		startTransition(() => {
+			const setsetPdfUrl = async () => {
+				setPdfUrl(await pdfDoc.saveAsBase64({ dataUri: true }))
+			}
+			setsetPdfUrl()
+		})
 	}
 
 	useEffect(() => {
