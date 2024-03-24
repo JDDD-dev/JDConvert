@@ -14,7 +14,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@astrojs/check": "0.5.9",
+    "@astrojs/check": "0.5.10",
     "@astrojs/react": "3.1.0",
     "@astrojs/tailwind": "5.1.0",
     "@astrojs/vercel": "7.4.0",
@@ -30,6 +30,7 @@
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.0",
     "lucide-react": "0.363.0",
+    "pdf-lib": "1.17.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "tailwind-merge": "2.2.2",
