@@ -40,7 +40,7 @@ export default function PdfCreatorComponent({ lang }: Props) {
 	}
 
 	const [ref, pdfs, setPdfs] = useDragAndDrop<HTMLUListElement, File>(arrayPdf, {
-		plugins: [animations({ duration: 100 })],
+		plugins: [animations({ duration: 50 })],
 	})
 
 	async function createPdf() {
