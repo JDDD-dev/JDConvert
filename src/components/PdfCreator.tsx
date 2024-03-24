@@ -127,7 +127,7 @@ export default function PdfCreatorComponent({ lang }: Props) {
 				onDragOver={(event) => event.preventDefault()}
 			>
 				{pdfs.length === 0 && (
-					<div className="absolute inset-0 flex h-auto w-auto animate-pulse flex-col items-center justify-center gap-4 self-center rounded-sm p-4 pt-6 outline-dashed outline-2">
+					<div className="absolute bottom-0 left-0 right-0 top-0 mb-auto ml-auto mr-auto mt-auto flex h-auto w-1/4 animate-pulse flex-col items-center justify-center gap-4 self-center rounded-sm p-4 pt-6 outline-dashed outline-2">
 						<FileDown className="scale-150" />
 						<span className="text-center">{t("pdfCreator.dropFiles")}</span>
 					</div>
