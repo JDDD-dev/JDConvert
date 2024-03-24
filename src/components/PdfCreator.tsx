@@ -4,8 +4,7 @@ import { useDragAndDrop } from "@formkit/drag-and-drop/react"
 import { animations } from "@formkit/drag-and-drop"
 import { FileDown, Trash2 } from "lucide-react"
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib"
-import { startTransition, useEffect, useState } from "react"
-import { Button } from "@/components/ui/button"
+import { useEffect, useState } from "react"
 
 interface Props {
 	lang: keyof typeof ui
