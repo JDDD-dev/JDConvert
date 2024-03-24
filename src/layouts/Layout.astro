@@ -36,7 +36,7 @@ const lang = getLangFromUrl(Astro.url)
 			<Header />
 			<div class="relative h-full min-h-dvh pb-10 pt-16">
 				<slot />
-				<Footer />
+				<Footer lang={lang} />
 			</div>
 		</main>
 		<SpeedInsights />
