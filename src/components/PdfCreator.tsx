@@ -5,15 +5,36 @@ import { animations } from "@formkit/drag-and-drop"
 import { FileDown, Trash2 } from "lucide-react"
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib"
 import { startTransition, useEffect, useState } from "react"
+import { Document, Outline, Page } from "react-pdf"
+import { pdfjs } from "react-pdf"
+import "react-pdf/dist/Page/TextLayer.css"
+import "react-pdf/dist/Page/AnnotationLayer.css"
+import { Button } from "./ui/button"
+
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+	"pdfjs-dist/build/pdf.worker.min.js",
+	import.meta.url
+).toString()
 
 interface Props {
 	lang: keyof typeof ui
+}
+
+interface Pages {
+	numPages: number
 }
 
 export default function PdfCreatorComponent({ lang }: Props) {
 	const t = useTranslations(lang)
 
 	const [pdfUrl, setPdfUrl] = useState("")
+	const [numPages, setNumPages] = useState(0)
+	const [pageNumber, setPageNumber] = useState(1)
+
+	function onDocumentLoadSuccess({ numPages }: Pages) {
+		setNumPages(numPages)
+		setPageNumber(1)
+	}
 
 	const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
 		event.preventDefault()
@@ -106,7 +127,10 @@ export default function PdfCreatorComponent({ lang }: Props) {
 
 		startTransition(() => {
 			const setsetPdfUrl = async () => {
-				setPdfUrl(await pdfDoc.saveAsBase64({ dataUri: true }))
+				const docUrl = URL.createObjectURL(
+					new Blob([await pdfDoc.save()], { type: "application/pdf" })
+				)
+				setPdfUrl(docUrl)
 			}
 			setsetPdfUrl()
 		})
@@ -119,8 +143,20 @@ export default function PdfCreatorComponent({ lang }: Props) {
 		fetchCreatePdf()
 	}, [pdfs])
 
+	function changePage(offset: number) {
+		setPageNumber((prevPageNumber) => prevPageNumber + offset)
+	}
+
+	function previousPage() {
+		changePage(-1)
+	}
+
+	function nextPage() {
+		changePage(1)
+	}
+
 	return (
-		<section className="flex h-[90dvh] w-full flex-col gap-40 p-14 pt-16 xl:flex-row">
+		<section className="flex h-[90dvh] w-full flex-col gap-40 p-14 pt-16 lg:flex-row">
 			<div
 				className="relative h-full w-full"
 				onDrop={handleDrop}
@@ -151,7 +187,26 @@ export default function PdfCreatorComponent({ lang }: Props) {
 					))}
 				</ul>
 			</div>
-			<iframe src={pdfUrl} className="h-full w-full" title="GENERATED-PDF" />
+			<div className="flex h-auto flex-col gap-4 pb-14">
+				<Document
+					file={pdfUrl}
+					className="h-auto w-auto overflow-scroll"
+					onLoadSuccess={onDocumentLoadSuccess}
+				>
+					<Page pageNumber={pageNumber}></Page>
+				</Document>
+				<div className="flex w-auto gap-3">
+					<p>
+						Page {pageNumber || (numPages ? 1 : "--")} of {numPages || "--"}
+					</p>
+					<Button disabled={pageNumber <= 1} onClick={previousPage} className="w-full">
+						Previous
+					</Button>
+					<Button disabled={pageNumber >= numPages} onClick={nextPage} className="w-full">
+						Next
+					</Button>
+				</div>
+			</div>
 		</section>
 	)
 }
