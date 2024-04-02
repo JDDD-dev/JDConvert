@@ -11,3 +11,13 @@ export function useTranslations(lang: keyof typeof ui) {
 		return ui[lang][key] || ui[defaultLang][key]
 	}
 }
+
+export function useTranslatedPath(lang: keyof typeof ui) {
+	return function translatePath(path: string, l: string = lang) {
+		const pathName = path.replaceAll("/", "")
+		const hasTranslation = defaultLang !== l
+		const translatedPath = hasTranslation ? "/" : path
+
+		return l === defaultLang ? translatedPath : `/${l}${translatedPath}`
+	}
+}
