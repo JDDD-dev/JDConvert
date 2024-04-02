@@ -2,6 +2,7 @@
 import { getLangFromUrl, useTranslations } from "@/i18n/utils"
 import { getRelativeLocaleUrl } from "astro:i18n"
 import { ModeToggle } from "@/components/ThemeToggle"
+import LanguageSelector from "@/components/LanguageSelector.astro"
 
 const lang = getLangFromUrl(Astro.url)
 
@@ -9,7 +10,7 @@ const t = useTranslations(lang)
 ---
 
 <header
-	class="fixed top-0 z-10 flex w-full content-center items-center gap-5 border-b-2 border-red-300 bg-white bg-opacity-100 p-5 dark:bg-gray-700 dark:bg-opacity-100"
+	class="fixed top-0 z-10 flex w-full content-center items-center gap-5 border-b-2 border-red-300 bg-white bg-opacity-100 p-5 transition-all dark:bg-gray-700 dark:bg-opacity-100"
 >
 	<a
 		href={getRelativeLocaleUrl(lang)}
@@ -32,7 +33,9 @@ const t = useTranslations(lang)
 			{t("index.title")}
 		</h1>
 	</a>
-	<div class="ml-auto">
+
+	<div class="ml-auto flex items-center gap-5">
+		<LanguageSelector />
 		<ModeToggle client:load />
 	</div>
 </header>
