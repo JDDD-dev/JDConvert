@@ -45,6 +45,16 @@ export default function PdfCreatorComponent({ lang }: Props) {
 		})
 	}
 
+	const addFile = (file: React.ChangeEvent<HTMLInputElement>) => {
+		const droppedFiles = file.currentTarget.files
+		if (droppedFiles !== null) {
+			const newFiles = Array.from(droppedFiles)
+			setPdfs(() => {
+				return [...pdfs, ...newFiles]
+			})
+		}
+	}
+
 	const arrayPdf: File[] = []
 
 	const removeFromList = (pdf: File) => {
@@ -161,8 +171,13 @@ export default function PdfCreatorComponent({ lang }: Props) {
 				onDrop={handleDrop}
 				onDragOver={(event) => event.preventDefault()}
 			>
+				<input
+					type="file"
+					className="absolute left-0 top-0 z-20 h-full w-full opacity-0"
+					onChange={(value) => addFile(value)}
+				></input>
 				{pdfs.length === 0 && (
-					<div className="absolute bottom-0 left-0 right-0 top-0 mb-auto ml-auto mr-auto mt-auto flex h-auto w-1/4 animate-pulse flex-col items-center justify-center gap-4 self-center rounded-sm p-4 pt-6 outline-dashed outline-2">
+					<div className="absolute bottom-0 left-0 right-0 top-0 z-10 mb-auto ml-auto mr-auto mt-auto flex h-auto w-1/4 animate-pulse flex-col items-center justify-center gap-4 self-center rounded-sm p-4 pt-6 outline-dashed outline-2">
 						<FileDown className="scale-150" />
 						<span className="text-center">{t("pdfCreator.dropFiles")}</span>
 					</div>
@@ -172,7 +187,7 @@ export default function PdfCreatorComponent({ lang }: Props) {
 					className="flex h-full w-full flex-col justify-center rounded-2xl border-2 border-sky-300 bg-slate-500 bg-opacity-40 p-4"
 				>
 					{pdfs.map((pdf) => (
-						<li className="w-full p-2" data-label={pdf} key={pdf.name}>
+						<li className="z-30 w-full p-2" data-label={pdf} key={pdf.name}>
 							<div className="flex w-full flex-row rounded bg-white p-3">
 								<span className="w-full font-medium text-red-600">{pdf.name}</span>
 								<Trash2
@@ -205,6 +220,9 @@ export default function PdfCreatorComponent({ lang }: Props) {
 						Next
 					</Button>
 				</div>
+				<a download="JDCONVERT_GENERATED_PDF.pdf" href={pdfUrl}>
+					<Button className="w-full">Download</Button>
+				</a>
 			</div>
 		</section>
 	)
