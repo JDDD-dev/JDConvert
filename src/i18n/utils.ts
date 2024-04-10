@@ -1,4 +1,4 @@
-import { ui, defaultLang } from "@/i18n/ui"
+import { ui, defaultLang, languages } from "@/i18n/ui"
 
 export function getLangFromUrl(url: URL) {
 	const [, lang] = url.pathname.split("/")
@@ -14,10 +14,20 @@ export function useTranslations(lang: keyof typeof ui) {
 
 export function useTranslatedPath(lang: keyof typeof ui) {
 	return function translatePath(path: string, l: string = lang) {
-		const pathName = path.replaceAll("/", "")
-		const hasTranslation = defaultLang !== l
-		const translatedPath = hasTranslation ? "/" : path
-
-		return l === defaultLang ? translatedPath : `/${l}${translatedPath}`
+		if (l === defaultLang) {
+			return "/" + path
+		}
+		return `/${l}/${path}`
 	}
+}
+
+export function getCurrentRoute(url: URL): string {
+	const pathname = url.pathname
+	const parts = pathname.split("/")
+	const res = parts.pop() || parts.pop()
+
+	if (Object.values(languages).some((language) => language.code === res)) {
+		return ""
+	}
+	return res + ""
 }

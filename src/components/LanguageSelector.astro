@@ -1,13 +1,13 @@
 ---
 import { languages } from "@/i18n/ui"
-import { getLangFromUrl, useTranslatedPath } from "@/i18n/utils"
+import { getCurrentRoute, getLangFromUrl, useTranslatedPath } from "@/i18n/utils"
 
 const lang = getLangFromUrl(Astro.url)
-const url = Astro.url.toString()
+const translatePath = useTranslatedPath(lang)
+const route = getCurrentRoute(Astro.url)
 
 const currentLocaleData = languages[lang]
-const otherLocales = Object.values(languages).filter((locale) => locale !== lang)
-const translatePath = useTranslatedPath(lang)
+const otherLocales = Object.values(languages).filter((locale) => locale.code !== lang)
 ---
 
 <div class="relative inline-block text-left">
@@ -20,7 +20,7 @@ const translatePath = useTranslatedPath(lang)
 			aria-expanded="true"
 			aria-haspopup="true"
 		>
-			{currentLocaleData}
+			{currentLocaleData.name}
 		</button>
 		<ul class="absolute hidden w-full pt-0.5 group-hover:block">
 			{
@@ -28,9 +28,9 @@ const translatePath = useTranslatedPath(lang)
 					<li class="py-[2px]">
 						<a
 							class="whitespace-no-wrap inline-flex w-full items-center justify-start gap-x-2 rounded-md bg-black/30 px-3 py-2 hover:bg-black/70"
-							href={translatePath(url, locale)}
+							href={translatePath(route, locale.code)}
 						>
-							{locale}
+							{locale.name}
 						</a>
 					</li>
 				))
