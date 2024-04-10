@@ -5,11 +5,10 @@ import { animations } from "@formkit/drag-and-drop"
 import { FileDown, Trash2 } from "lucide-react"
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib"
 import { startTransition, useEffect, useState } from "react"
-import { Document, Outline, Page } from "react-pdf"
-import { pdfjs } from "react-pdf"
+import { Document, pdfjs, Page } from "react-pdf"
+import { Button } from "./ui/button"
 import "react-pdf/dist/Page/TextLayer.css"
 import "react-pdf/dist/Page/AnnotationLayer.css"
-import { Button } from "./ui/button"
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 	"pdfjs-dist/build/pdf.worker.min.js",
