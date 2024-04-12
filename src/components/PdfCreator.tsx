@@ -141,7 +141,7 @@ export default function PdfCreatorComponent({ lang }: Props) {
 				)
 				setPdfUrl(docUrl)
 			}
-			setsetPdfUrl()
+			void setsetPdfUrl()
 		})
 	}
 
@@ -149,7 +149,7 @@ export default function PdfCreatorComponent({ lang }: Props) {
 		const fetchCreatePdf = async () => {
 			await createPdf()
 		}
-		fetchCreatePdf()
+		void fetchCreatePdf()
 	}, [pdfs])
 
 	function changePage(offset: number) {
