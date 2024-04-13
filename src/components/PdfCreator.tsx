@@ -101,8 +101,6 @@ export default function PdfCreatorComponent({ lang }: Props) {
 			const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman)
 			const page = pdfDoc.addPage(PageSizes.A4)
 
-			console.log(page.getHeight() + "/" + page.getWidth())
-
 			const { width, height } = page.getSize()
 
 			const fontSize = 30
