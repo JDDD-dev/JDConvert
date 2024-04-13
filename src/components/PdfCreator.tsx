@@ -101,6 +101,8 @@ export default function PdfCreatorComponent({ lang }: Props) {
 			const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman)
 			const page = pdfDoc.addPage(PageSizes.A4)
 
+			console.log(page.getHeight() + "/" + page.getWidth())
+
 			const { width, height } = page.getSize()
 
 			const fontSize = 30
@@ -198,7 +200,7 @@ export default function PdfCreatorComponent({ lang }: Props) {
 	}, [pdfs, size])
 
 	return (
-		<section className="flex h-[90dvh] w-full flex-col gap-10 p-14 pt-16 lg:flex-row">
+		<section className="flex h-[92dvh] w-full flex-col gap-10 p-14 pt-16 lg:flex-row">
 			<div
 				className="relative h-full min-h-72 w-full"
 				onDrop={handleDrop}
@@ -241,7 +243,7 @@ export default function PdfCreatorComponent({ lang }: Props) {
 			>
 				<Document
 					file={pdfUrl}
-					className="h-full w-full overflow-y-auto overflow-x-hidden rounded-md border-2 border-sky-300"
+					className="h-80 w-full overflow-y-auto overflow-x-hidden rounded-md border-2 border-sky-300 lg:h-full"
 					onLoadSuccess={onDocumentLoadSuccess}
 					loading={<LoadingPdf />}
 					noData={<LoadingPdf />}
