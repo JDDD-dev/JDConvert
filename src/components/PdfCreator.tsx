@@ -41,7 +41,7 @@ export default function PdfCreatorComponent({ lang }: Props) {
 	const [pageNumber, setPageNumber] = useState(1)
 
 	const [ref, pdfs, setPdfs] = useDragAndDrop<HTMLUListElement, File>(arrayPdf, {
-		plugins: [animations({ duration: 50 })],
+		plugins: [animations({ duration: 100 })],
 	})
 
 	const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
@@ -189,7 +189,7 @@ export default function PdfCreatorComponent({ lang }: Props) {
 	return (
 		<section className="flex h-[90dvh] w-full flex-col gap-10 p-14 pt-16 lg:flex-row">
 			<div
-				className="relative h-full w-full"
+				className="relative h-full min-h-72 w-full"
 				onDrop={handleDrop}
 				onDragOver={(event) => event.preventDefault()}
 			>
@@ -207,7 +207,7 @@ export default function PdfCreatorComponent({ lang }: Props) {
 				)}
 				<ul
 					ref={ref}
-					className="flex h-full w-full flex-col justify-center rounded-md border-2 border-sky-300 bg-slate-500 bg-opacity-40 p-4"
+					className="flex h-full w-full flex-col justify-center overflow-y-auto rounded-md border-2 border-sky-300 bg-slate-500 bg-opacity-40 p-4"
 				>
 					{pdfs.map((pdf) => (
 						<li className="z-30 w-full p-2" data-label={pdf} key={pdf.name}>
@@ -224,10 +224,10 @@ export default function PdfCreatorComponent({ lang }: Props) {
 					))}
 				</ul>
 			</div>
-			<div className="relative flex h-full w-[595.28px] flex-col justify-center gap-4">
+			<div className="relative flex h-full w-full flex-col justify-center gap-4 lg:w-[595.28px]">
 				<Document
 					file={pdfUrl}
-					className="h-full w-full overflow-x-hidden overflow-y-scroll rounded-md border-2 border-sky-300"
+					className="h-full w-full overflow-auto rounded-md border-2 border-sky-300"
 					onLoadSuccess={onDocumentLoadSuccess}
 					loading={<LoadingPdf />}
 					noData={<LoadingPdf />}
