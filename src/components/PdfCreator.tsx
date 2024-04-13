@@ -239,7 +239,7 @@ export default function PdfCreatorComponent({ lang }: Props) {
 			</div>
 			<div
 				id="pdfDocument"
-				className="relative flex h-full w-full flex-col justify-center gap-4 lg:w-[595.28px]"
+				className="relative flex h-full w-full flex-col justify-center gap-4 lg:w-[595.28px] lg:min-w-[595.28px]"
 			>
 				<Document
 					file={pdfUrl}
