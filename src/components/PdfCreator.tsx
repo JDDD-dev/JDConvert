@@ -271,17 +271,19 @@ export default function PdfCreatorComponent({ lang }: Props) {
 				{pdfs.length !== 0 && (
 					<div className="absolute bottom-0 z-10 flex w-full gap-2 p-4 opacity-15 hover:opacity-80">
 						<Button disabled={pageNumber <= 1} onClick={previousPage} className="w-full bg-red-400">
-							Previous
+							{t("pdfCreator.previous")}
 						</Button>
 						<Button
 							disabled={pageNumber >= numPagesDoc}
 							onClick={nextPage}
 							className="w-full bg-red-400"
 						>
-							Next
+							{t("pdfCreator.next")}
 						</Button>
 						<a download="JDCONVERT_GENERATED_PDF.pdf" href={pdfUrl}>
-							<Button className="w-full bg-red-400 hover:bg-red-400">Download</Button>
+							<Button className="w-full bg-red-400 hover:bg-red-400">
+								{t("pdfCreator.download")}
+							</Button>
 						</a>
 					</div>
 				)}

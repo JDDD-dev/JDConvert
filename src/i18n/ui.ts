@@ -26,6 +26,9 @@ export const ui = {
 		"pdfCreator.dropFiles": "Drop your files here",
 		"footer.title": "Made with ❤️ by JDDD-dev",
 		"pdfCreator.previewPdf": "Your PDF will preview here!",
+		"pdfCreator.previous": "Previous",
+		"pdfCreator.next": "Next",
+		"pdfCreator.download": "Download",
 	},
 	es: {
 		"index.title": "JDConvert",
@@ -44,5 +47,8 @@ export const ui = {
 		"pdfCreator.dropFiles": "Arrastra tus ficheros aquí",
 		"footer.title": "Hecho con ❤️ por JDDD-dev",
 		"pdfCreator.previewPdf": "Podras previsualizar tu PDF aquí!",
+		"pdfCreator.previous": "Previa",
+		"pdfCreator.next": "Siguiente",
+		"pdfCreator.download": "Descargar",
 	},
 } as const
