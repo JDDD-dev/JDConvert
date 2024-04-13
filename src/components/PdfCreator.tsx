@@ -50,8 +50,15 @@ export default function PdfCreatorComponent({ lang }: Props) {
 		if (event.dataTransfer === null || event.dataTransfer.files.length === 0) return
 		const droppedFiles = event.dataTransfer.files
 		const newFiles = Array.from(droppedFiles)
+		const newFilesChecked = newFiles.filter(
+			(file) =>
+				file.name.endsWith(".jpeg") ||
+				file.name.endsWith(".jpg") ||
+				file.name.endsWith(".pdf") ||
+				file.name.endsWith(".png")
+		)
 		setPdfs(() => {
-			return [...pdfs, ...newFiles]
+			return [...pdfs, ...newFilesChecked]
 		})
 	}
 
@@ -59,8 +66,15 @@ export default function PdfCreatorComponent({ lang }: Props) {
 		const droppedFiles = file.currentTarget.files
 		if (droppedFiles !== null) {
 			const newFiles = Array.from(droppedFiles)
+			const newFilesChecked = newFiles.filter(
+				(file) =>
+					file.name.endsWith(".jpeg") ||
+					file.name.endsWith(".jpg") ||
+					file.name.endsWith(".pdf") ||
+					file.name.endsWith(".png")
+			)
 			setPdfs(() => {
-				return [...pdfs, ...newFiles]
+				return [...pdfs, ...newFilesChecked]
 			})
 		}
 	}
