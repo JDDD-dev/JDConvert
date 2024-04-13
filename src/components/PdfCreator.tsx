@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button"
 import "react-pdf/dist/Page/TextLayer.css"
 import "react-pdf/dist/Page/AnnotationLayer.css"
 import { LoadingPdf } from "@/components/ui/loadingPdf"
+import useSize from "@/lib/hooks"
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 	"pdfjs-dist/build/pdf.worker.min.js",
@@ -37,8 +38,10 @@ export default function PdfCreatorComponent({ lang }: Props) {
 
 	const arrayPdf: File[] = []
 	const [pdfUrl, setPdfUrl] = useState("")
-	const [numPages, setNumPages] = useState(0)
+	const [numPagesDoc, setNumPagesDoc] = useState(0)
 	const [pageNumber, setPageNumber] = useState(1)
+	const [pageScale, setPageScale] = useState(1)
+	const size = useSize()
 
 	const [ref, pdfs, setPdfs] = useDragAndDrop<HTMLUListElement, File>(arrayPdf, {
 		plugins: [animations({ duration: 100 })],
@@ -78,6 +81,17 @@ export default function PdfCreatorComponent({ lang }: Props) {
 
 	const calculateScale = (page: PDFPage, embedded: PDFImage | PDFEmbeddedPage) => {
 		return Math.min(page.getWidth() / embedded.width, page.getHeight() / embedded.height)
+	}
+
+	const calculateScaleScreen = () => {
+		const ref = document.querySelector("#pdfDocument")
+
+		if (ref === null) return
+		const scale = ref.clientWidth / PageSizes.A4[0]
+
+		if (scale !== pageScale) {
+			setPageScale(scale)
+		}
 	}
 
 	async function createPdf() {
@@ -162,7 +176,7 @@ export default function PdfCreatorComponent({ lang }: Props) {
 	}
 
 	function onDocumentLoadSuccess({ numPages }: Pages) {
-		setNumPages(numPages)
+		setNumPagesDoc(numPages)
 		setPageNumber(1)
 	}
 
@@ -183,7 +197,7 @@ export default function PdfCreatorComponent({ lang }: Props) {
 			await createPdf()
 		}
 		void fetchCreatePdf()
-	}, [pdfs])
+	}, [pdfs, size])
 
 	return (
 		<section className="flex h-[90dvh] w-full flex-col gap-10 p-14 pt-16 lg:flex-row">
@@ -223,15 +237,22 @@ export default function PdfCreatorComponent({ lang }: Props) {
 					))}
 				</ul>
 			</div>
-			<div className="relative flex h-full w-full flex-col justify-center gap-4 lg:w-[595.28px]">
+			<div
+				id="pdfDocument"
+				className="relative flex h-full w-full flex-col justify-center gap-4 lg:w-[595.28px]"
+			>
 				<Document
 					file={pdfUrl}
-					className="h-full w-full overflow-auto rounded-md border-2 border-sky-300"
+					className="h-full w-full overflow-y-auto overflow-x-hidden rounded-md border-2 border-sky-300"
 					onLoadSuccess={onDocumentLoadSuccess}
 					loading={<LoadingPdf />}
 					noData={<LoadingPdf />}
 				>
-					<Page pageNumber={pageNumber}></Page>
+					<Page
+						pageNumber={pageNumber}
+						onLoadSuccess={calculateScaleScreen}
+						scale={pageScale}
+					></Page>
 				</Document>
 				{pdfs.length !== 0 && (
 					<div className="absolute bottom-0 z-10 flex w-full gap-2 p-4 opacity-15 hover:opacity-80">
@@ -239,7 +260,7 @@ export default function PdfCreatorComponent({ lang }: Props) {
 							Previous
 						</Button>
 						<Button
-							disabled={pageNumber >= numPages}
+							disabled={pageNumber >= numPagesDoc}
 							onClick={nextPage}
 							className="w-full bg-red-400"
 						>
