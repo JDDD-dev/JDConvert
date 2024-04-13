@@ -116,7 +116,6 @@ export default function PdfCreatorComponent({ lang }: Props) {
 								x: newPage.getWidth() / 2 - embedPageDims.width / 2,
 								y: newPage.getHeight() / 2 - embedPageDims.height / 2,
 							})
-							console.log(newPage.getWidth())
 						})
 					)
 				} else if (pdf.name.endsWith(".png")) {
