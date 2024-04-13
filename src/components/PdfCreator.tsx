@@ -144,7 +144,7 @@ export default function PdfCreatorComponent({ lang }: Props) {
 						width: pngDims.width,
 						height: pngDims.height,
 					})
-				} else {
+				} else if (pdf.name.endsWith(".jpg") || pdf.name.endsWith(".jpeg")) {
 					const donorJpgBytes = await pdf.arrayBuffer()
 
 					const jpgImage = await pdfDoc.embedJpg(donorJpgBytes)
