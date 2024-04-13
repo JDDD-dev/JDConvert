@@ -42,7 +42,7 @@ export default function PdfCreatorComponent({ lang }: Props) {
 	const size = useSize()
 
 	const [ref, pdfs, setPdfs] = useDragAndDrop<HTMLUListElement, File>(arrayPdf, {
-		plugins: [animations({ duration: 200 })],
+		plugins: [animations({ duration: 300 })],
 	})
 
 	const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
