@@ -69,6 +69,7 @@ export default {
 			scale: {
 				103: "1.03",
 				200: "2.00",
+				5: "0.05",
 			},
 			fontWeight: {
 				cardtitle: "650",

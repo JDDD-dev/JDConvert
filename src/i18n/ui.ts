@@ -1,6 +1,9 @@
 export const languages = {
-	en: "English",
-	es: "Spanish",
+	en: { code: "en", name: "English" },
+	es: {
+		code: "es",
+		name: "Spanish",
+	},
 }
 
 export const defaultLang = "en"
@@ -18,6 +21,14 @@ export const ui = {
 		"bytesToString.octal": "Octal",
 		"index.bytesToString.title": "Bytes to Text",
 		"index.bytesToString.description": "Decode hex, decimal or octal messages",
+		"index.pdfCreator.title": "PDF Creator",
+		"index.pdfCreator.description": "Join several images or PDFs into one",
+		"pdfCreator.dropFiles": "Drop your files here",
+		"footer.title": "Made with ❤️ by JDDD-dev",
+		"pdfCreator.previewPdf": "Your PDF will preview here!",
+		"pdfCreator.previous": "Previous",
+		"pdfCreator.next": "Next",
+		"pdfCreator.download": "Download",
 	},
 	es: {
 		"index.title": "JDConvert",
@@ -30,6 +41,14 @@ export const ui = {
 		"bytesToString.decimal": "Decimal",
 		"bytesToString.octal": "Octal",
 		"index.bytesToString.title": "Bytes a Texto",
-		"index.bytesToString.description": "Traduce mensajes en hexadecimal, decimal o octal",
+		"index.bytesToString.description": "Traduce desde hexadecimal, decimal o octal",
+		"index.pdfCreator.title": "Creador de PDF",
+		"index.pdfCreator.description": "Une varias imagenes o PFDs en uno",
+		"pdfCreator.dropFiles": "Arrastra tus ficheros aquí",
+		"footer.title": "Hecho con ❤️ por JDDD-dev",
+		"pdfCreator.previewPdf": "Podras previsualizar tu PDF aquí!",
+		"pdfCreator.previous": "Previa",
+		"pdfCreator.next": "Siguiente",
+		"pdfCreator.download": "Descargar",
 	},
 } as const

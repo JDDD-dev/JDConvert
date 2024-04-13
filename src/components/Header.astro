@@ -2,6 +2,7 @@
 import { getLangFromUrl, useTranslations } from "@/i18n/utils"
 import { getRelativeLocaleUrl } from "astro:i18n"
 import { ModeToggle } from "@/components/ThemeToggle"
+import LanguageSelector from "@/components/LanguageSelector.astro"
 
 const lang = getLangFromUrl(Astro.url)
 
@@ -9,11 +10,11 @@ const t = useTranslations(lang)
 ---
 
 <header
-	class="sticky top-0 z-10 flex content-center items-center gap-5 border-b-2 border-red-300 bg-white bg-opacity-100 p-5 dark:bg-gray-700 dark:bg-opacity-100"
+	class="fixed top-0 z-50 flex w-full content-center items-center justify-center gap-5 border-b-2 border-red-300 bg-white bg-opacity-100 p-5 transition-all dark:bg-gray-700 dark:bg-opacity-100"
 >
 	<a
 		href={getRelativeLocaleUrl(lang)}
-		class="flex content-center hover:text-gray-900 hover:dark:text-gray-600"
+		class="flex content-center items-center justify-center hover:text-gray-900 hover:dark:text-gray-600"
 	>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -21,18 +22,20 @@ const t = useTranslations(lang)
 			viewBox="0 0 24 24"
 			stroke-width="2"
 			stroke="currentColor"
-			class="h-14 w-14"
+			class="h-7 w-7 md:h-14 md:w-14"
 		>
 			<path
 				stroke-linecap="round"
 				stroke-linejoin="round"
 				d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"></path>
 		</svg>
-		<h1 class="text-title font-bold">
+		<h1 class="align-middle text-3xl font-bold md:text-title">
 			{t("index.title")}
 		</h1>
 	</a>
-	<div class="ml-auto">
+
+	<div class="ml-auto flex items-center gap-5">
+		<LanguageSelector />
 		<ModeToggle client:load />
 	</div>
 </header>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { startTransition, useEffect, useState } from "react"
 import { Textarea } from "@/components/ui/textarea"
 import {
 	Select,
@@ -42,7 +42,9 @@ export default function BytesToStringComponent({ lang }: Props) {
 		for (let n = 0; n < bytesText.length; n += 2) {
 			str += String.fromCharCode(parseInt(bytesText.substring(n, 2), 16))
 		}
-		setDecoded(str)
+		startTransition(() => {
+			setDecoded(str)
+		})
 	}
 
 	const convertBytesToStringDecimal = (bytesText: string) => {
@@ -54,14 +56,20 @@ export default function BytesToStringComponent({ lang }: Props) {
 
 		const decodedText = textDecoder.decode(u8arr)
 
-		setDecoded(decodedText)
+		startTransition(() => {
+			setDecoded(decodedText)
+		})
 	}
 
 	return (
-		<div className="p-5">
+		<div className="p-5 pt-14">
 			<Textarea
 				placeholder={t("bytesToString.input")}
-				onChangeCapture={(e) => setEncodedText(e.currentTarget.value)}
+				onChangeCapture={(e) => {
+					startTransition(() => {
+						setEncodedText(e.currentTarget.value)
+					})
+				}}
 				className="mb-5 resize-none"
 			/>
 			<Textarea value={decoded} readOnly className="mt-5 resize-none" />

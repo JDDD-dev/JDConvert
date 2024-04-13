@@ -24,19 +24,20 @@ const lang = getLangFromUrl(Astro.url)
 		<meta name="keywords" content="convert, transform" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
+		<link rel="sitemap" href="/sitemap-index.xml" />
 		<title>{title}</title>
 	</head>
+
 	<body>
 		<div
-			class="absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] dark:bg-neutral-950"
+			class="absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] transition-all dark:bg-neutral-950"
 		>
 		</div>
-		<main class="relative h-full min-h-dvh w-full">
-			<div class="relative h-full min-h-dvh pb-10">
-				<Header />
+		<main class="h-full min-h-dvh w-full">
+			<Header />
+			<div class="relative h-full min-h-dvh pt-14">
 				<slot />
-				<Footer />
+				<Footer lang={lang} />
 			</div>
 		</main>
 		<SpeedInsights />
@@ -45,13 +46,15 @@ const lang = getLangFromUrl(Astro.url)
 
 <style is:global>
 	body {
-		height: 100%;
 		display: flex;
 		min-height: 100dvh;
+		height: auto;
 	}
 
 	html {
 		font-family: "Quicksand Variable", system-ui, sans-serif;
+		min-height: 100dvh;
+		height: auto;
 	}
 </style>
 
