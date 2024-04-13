@@ -29,6 +29,8 @@ export const ui = {
 		"pdfCreator.previous": "Previous",
 		"pdfCreator.next": "Next",
 		"pdfCreator.download": "Download",
+		"index.videoConverter.title": "Audio/Video Converter",
+		"index.videoConverter.description": "Convert any audio/video file format",
 	},
 	es: {
 		"index.title": "JDConvert",
@@ -50,5 +52,7 @@ export const ui = {
 		"pdfCreator.previous": "Previa",
 		"pdfCreator.next": "Siguiente",
 		"pdfCreator.download": "Descargar",
+		"index.videoConverter.title": "Convertidor Audio/Video",
+		"index.videoConverter.description": "Transforma el formato de cualquier fichero de audio/video",
 	},
 } as const
