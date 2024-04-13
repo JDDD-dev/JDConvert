@@ -15,8 +15,6 @@ import {
 import { startTransition, useEffect, useState } from "react"
 import { Document, pdfjs, Page } from "react-pdf"
 import { Button } from "@/components/ui/button"
-import "react-pdf/dist/Page/TextLayer.css"
-import "react-pdf/dist/Page/AnnotationLayer.css"
 import { LoadingPdf } from "@/components/ui/loadingPdf"
 import useSize from "@/lib/hooks"
 
@@ -252,6 +250,8 @@ export default function PdfCreatorComponent({ lang }: Props) {
 						pageNumber={pageNumber}
 						onLoadSuccess={calculateScaleScreen}
 						scale={pageScale}
+						renderAnnotationLayer={false}
+						renderTextLayer={false}
 					></Page>
 				</Document>
 				{pdfs.length !== 0 && (
