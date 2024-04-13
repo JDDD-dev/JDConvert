@@ -7,7 +7,6 @@ const LoadingPdf = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
 	({ className, ...props }, ref) => (
 		<div ref={ref} className={cn("h-full w-full", className)} {...props}>
 			<LoaderCircleIcon className="h-full w-full animate-spin"></LoaderCircleIcon>
-			<span className="h-full w-full text-center text-3xl">Loading...</span>
 		</div>
 	)
 )
