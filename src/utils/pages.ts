@@ -19,4 +19,4 @@ export const pages = {
 		icon: FileVideoIcon,
 		name: "Video/Audio Converter",
 	},
-}
+} as const
