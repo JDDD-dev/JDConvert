@@ -1,0 +1,16 @@
+---
+import VideoConverterComponent from "@/components/VideoConverter"
+import { getLangFromUrl, useTranslations } from "@/i18n/utils"
+import Layout from "@/layouts/Layout.astro"
+
+const lang = getLangFromUrl(Astro.url)
+
+const t = useTranslations(lang)
+
+Astro.response.headers.set("Cross-Origin-Opener-Policy", "same-origin")
+Astro.response.headers.set("Cross-Origin-Embedder-Policy", "require-corp")
+---
+
+<Layout title={t("index.title")} description={t("index.description")}>
+	<VideoConverterComponent lang={lang} client:load client:only="react" />
+</Layout>
