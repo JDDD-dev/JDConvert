@@ -5,6 +5,7 @@ import { useTranslations } from "@/i18n/utils"
 import { LoaderCircleIcon, UploadIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { fetchFile, toBlobURL } from "@ffmpeg/util"
+import { Progress } from "@/components/ui/progress"
 
 interface Props {
 	lang: keyof typeof ui
@@ -18,6 +19,7 @@ export default function VideoConverterComponent({ lang }: Props) {
 	const [file, setFile] = useState("")
 	const [endFile, setEndFile] = useState("")
 	const [transpiling, setTranspiling] = useState(false)
+	const [progress, setProgress] = useState(0)
 
 	const addFile = (value: ChangeEvent<HTMLInputElement>) => {
 		const newFileArray = value.currentTarget.files
@@ -46,8 +48,8 @@ export default function VideoConverterComponent({ lang }: Props) {
 		const baseURL = "https://unpkg.com/@ffmpeg/core-mt@0.12.6/dist/esm"
 		const ffmpeg = ffmpegRef.current
 
-		ffmpeg.on("progress", ({ progress, time }) => {
-			console.log(`${progress * 100} % (transcoded time: ${time / 1000000} s)`)
+		ffmpeg.on("progress", ({ progress }) => {
+			setProgress(progress * 100)
 		})
 
 		await ffmpeg.load({
@@ -63,23 +65,22 @@ export default function VideoConverterComponent({ lang }: Props) {
 		const ffmpeg = ffmpegRef.current
 
 		await ffmpeg.writeFile("input.mp4", await fetchFile(file))
-		console.log("test2")
-		await ffmpeg.exec(["-i", "input.mp4", "output.avi"])
-		const data = await ffmpeg.readFile("output.avi")
-		console.log("test3")
-		setEndFile(URL.createObjectURL(new Blob([data], { type: "video/avi" })))
+		await ffmpeg.exec(["-i", "input.mp4", "output.mkv"])
+		const data = await ffmpeg.readFile("output.mkv")
+		setEndFile(URL.createObjectURL(new Blob([data], { type: "video/mkv" })))
 		setTranspiling(false)
 	}
 
 	return loaded ? (
-		<div className="mt-16 flex h-full w-full flex-row">
+		<div className="mt-16 h-full w-full gap-4 md:grid md:grid-cols-2">
 			{file ? (
 				<>
-					<video src={file} controls className="w-1/2"></video>
-					<video src={endFile} controls className="w-1/2"></video>
-					<Button onClick={transpile} disabled={transpiling}>
+					<video src={file} controls className="h-full w-full p-4"></video>
+					<video src={endFile} controls className="h-full w-full p-4"></video>
+					<Button onClick={transpile} disabled={transpiling} className="m-10 md:col-span-2">
 						Transpile
 					</Button>
+					<Progress className="m-10 p-3 md:col-span-2" value={progress} />
 				</>
 			) : (
 				<>
