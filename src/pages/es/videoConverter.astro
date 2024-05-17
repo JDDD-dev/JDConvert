@@ -3,8 +3,9 @@ import VideoConverterComponent from "@/components/VideoConverter"
 import { getLangFromUrl, useTranslations } from "@/i18n/utils"
 import Layout from "@/layouts/Layout.astro"
 
-const lang = getLangFromUrl(Astro.url)
+export const prerender = false
 
+const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
 
 Astro.response.headers.set("Cross-Origin-Opener-Policy", "same-origin")
