@@ -3,8 +3,9 @@ import { getLangFromUrl, useTranslations } from "@/i18n/utils"
 import Layout from "@/layouts/Layout.astro"
 import PdfCreatorComponent from "@/components/PdfCreator"
 
-const lang = getLangFromUrl(Astro.url)
+export const prerender = false
 
+const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
 ---
 
