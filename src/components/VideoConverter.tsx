@@ -45,7 +45,8 @@ export default function VideoConverterComponent({ lang }: Props) {
 	}, [])
 
 	const load = async () => {
-		const baseURL = "https://unpkg.com/@ffmpeg/core-mt@0.12.6/dist/esm"
+		const baseURL = "https://unpkg.com/@ffmpeg/core@0.12.6/dist/esm"
+		// const baseURL = "https://unpkg.com/@ffmpeg/core-mt@0.12.6/dist/esm"
 		const ffmpeg = ffmpegRef.current
 
 		ffmpeg.on("progress", ({ progress }) => {
