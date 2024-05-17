@@ -125,6 +125,8 @@ export default function PdfCreatorComponent({ lang }: Props) {
 
 			const { width, height } = page.getSize()
 
+			console.log("test")
+
 			const fontSize = 30
 			page.drawText(t("pdfCreator.previewPdf"), {
 				x: width / 4.5,
@@ -133,53 +135,52 @@ export default function PdfCreatorComponent({ lang }: Props) {
 				font: timesRomanFont,
 				color: rgb(0, 0.53, 0.71),
 			})
-			return
-		}
+		} else {
+			const embed = {
+				pdf: async ({ donor, recipient }: { donor: File; recipient: PDFDocument }) => {
+					const donorPdfBytes = await donor.arrayBuffer()
 
-		const embed = {
-			pdf: async ({ donor, recipient }: { donor: File; recipient: PDFDocument }) => {
-				const donorPdfBytes = await donor.arrayBuffer()
+					const donorPdf = await PDFDocument.load(donorPdfBytes)
+					await Promise.all(
+						donorPdf.getPages().map(async (page) => {
+							const newPage = recipient.addPage()
+							const embedPage = await recipient.embedPage(page)
 
-				const donorPdf = await PDFDocument.load(donorPdfBytes)
-				await Promise.all(
-					donorPdf.getPages().map(async (page) => {
-						const newPage = recipient.addPage()
-						const embedPage = await recipient.embedPage(page)
-
-						const embedPageDims = embedPage.scale(calculateScale(newPage, embedPage))
-						newPage.drawPage(embedPage, {
-							...embedPageDims,
-							x: newPage.getWidth() / 2 - embedPageDims.width / 2,
-							y: newPage.getHeight() / 2 - embedPageDims.height / 2,
+							const embedPageDims = embedPage.scale(calculateScale(newPage, embedPage))
+							newPage.drawPage(embedPage, {
+								...embedPageDims,
+								x: newPage.getWidth() / 2 - embedPageDims.width / 2,
+								y: newPage.getHeight() / 2 - embedPageDims.height / 2,
+							})
 						})
+					)
+				},
+				images: async ({ donor, recipient }: { donor: File; recipient: PDFDocument }) => {
+					const donorBytes = await donor.arrayBuffer()
+
+					const pngImage = await (donor.name.endsWith(".jpg") || donor.name.endsWith(".jpeg")
+						? recipient.embedJpg(donorBytes)
+						: recipient.embedPng(donorBytes))
+
+					const page = recipient.addPage(PageSizes.A4)
+
+					const pngDims = pngImage.scale(calculateScale(page, pngImage))
+
+					page.drawImage(pngImage, {
+						x: page.getWidth() / 2 - pngDims.width / 2,
+						y: page.getHeight() / 2 - pngDims.height / 2,
+						width: pngDims.width,
+						height: pngDims.height,
 					})
-				)
-			},
-			images: async ({ donor, recipient }: { donor: File; recipient: PDFDocument }) => {
-				const donorBytes = await donor.arrayBuffer()
+				},
+			}
 
-				const pngImage = await (donor.name.endsWith(".jpg") || donor.name.endsWith(".jpeg")
-					? recipient.embedJpg(donorBytes)
-					: recipient.embedPng(donorBytes))
-
-				const page = recipient.addPage(PageSizes.A4)
-
-				const pngDims = pngImage.scale(calculateScale(page, pngImage))
-
-				page.drawImage(pngImage, {
-					x: page.getWidth() / 2 - pngDims.width / 2,
-					y: page.getHeight() / 2 - pngDims.height / 2,
-					width: pngDims.width,
-					height: pngDims.height,
-				})
-			},
-		}
-
-		for (const file of pdfs) {
-			if (file.name.endsWith(".pdf")) {
-				await embed.pdf({ donor: file, recipient: pdfDoc })
-			} else {
-				await embed.images({ donor: file, recipient: pdfDoc })
+			for (const file of pdfs) {
+				if (file.name.endsWith(".pdf")) {
+					await embed.pdf({ donor: file, recipient: pdfDoc })
+				} else {
+					await embed.images({ donor: file, recipient: pdfDoc })
+				}
 			}
 		}
 
