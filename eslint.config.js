@@ -8,7 +8,7 @@ export default ts.config(
 	...ts.configs.recommendedTypeChecked,
 	{
 		files: ["src/**/*.ts", "src/**/*.tsx", "src/**/*.astro"],
-		plugins: { ...react.plugins },
+		plugins: { react },
 		languageOptions: {
 			parserOptions: {
 				project: true,
