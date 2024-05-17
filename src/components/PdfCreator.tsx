@@ -125,8 +125,6 @@ export default function PdfCreatorComponent({ lang }: Props) {
 
 			const { width, height } = page.getSize()
 
-			console.log("test")
-
 			const fontSize = 30
 			page.drawText(t("pdfCreator.previewPdf"), {
 				x: width / 4.5,
