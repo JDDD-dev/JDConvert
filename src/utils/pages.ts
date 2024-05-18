@@ -1,4 +1,4 @@
-import { ArrowDown01, FilePlus2, FileVideoIcon } from "lucide-react"
+import { ArrowDown01, FilePlus2 } from "lucide-react"
 
 export const pages = {
 	bytesToString: {
@@ -12,11 +12,5 @@ export const pages = {
 		i18n: "pdfCreator",
 		icon: FilePlus2,
 		name: "PDF Creator",
-	},
-	videoConverter: {
-		url: "videoConverter",
-		i18n: "videoConverter",
-		icon: FileVideoIcon,
-		name: "Video/Audio Converter",
 	},
 } as const

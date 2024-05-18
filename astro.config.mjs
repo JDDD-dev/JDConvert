@@ -1,7 +1,7 @@
 import { defineConfig } from "astro/config"
 import react from "@astrojs/react"
 import tailwind from "@astrojs/tailwind"
-import vercel from "@astrojs/vercel/serverless"
+import vercel from "@astrojs/vercel/static"
 
 import sitemap from "@astrojs/sitemap"
 
@@ -33,22 +33,13 @@ export default defineConfig({
 			es: "en",
 		},
 	},
-	output: "hybrid",
+	output: "static",
 	adapter: vercel({
 		webAnalytics: {
 			enabled: true,
 		},
 	}),
 	vite: {
-		optimizeDeps: {
-			exclude: ["@ffmpeg/ffmpeg", "@ffmpeg/util"],
-		},
-		server: {
-			headers: {
-				"Cross-Origin-Opener-Policy": "same-origin",
-				"Cross-Origin-Embedder-Policy": "require-corp",
-			},
-		},
 		build: {
 			chunkSizeWarningLimit: 900,
 		},
