@@ -62,9 +62,7 @@ export default function PdfCreatorComponent({ lang }: Props) {
 				file.name.endsWith(".png")
 		)
 
-		setPdfs(() => {
-			return [...pdfs, ...newFilesChecked]
-		})
+		setPdfs([...pdfs, ...newFilesChecked])
 	}
 
 	const addFile = (file: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,9 +80,10 @@ export default function PdfCreatorComponent({ lang }: Props) {
 				file.name.endsWith(".png")
 		)
 
-		setPdfs(() => {
-			return [...pdfs, ...newFilesChecked]
-		})
+		setPdfs([...pdfs, ...newFilesChecked])
+
+		// Reset input for firing onChange always
+		file.target.value = ""
 	}
 
 	const removeFromList = (pdf: File) => {
@@ -94,9 +93,7 @@ export default function PdfCreatorComponent({ lang }: Props) {
 
 		newArray.splice(index, 1)
 
-		setPdfs(() => {
-			return newArray
-		})
+		setPdfs(newArray)
 	}
 
 	const calculateScale = (page: PDFPage, embedded: PDFImage | PDFEmbeddedPage) => {
@@ -242,8 +239,8 @@ export default function PdfCreatorComponent({ lang }: Props) {
 				>
 					{pdfs.map((pdf) => (
 						<li className="z-30 w-full p-2" data-label={pdf} key={pdf.name}>
-							<div className="flex w-full flex-row rounded bg-white p-3">
-								<span className="w-full font-medium text-red-600">{pdf.name}</span>
+							<div className="flex w-full flex-row justify-between rounded bg-white p-3">
+								<span className="max-w-sm truncate font-medium text-red-600">{pdf.name}</span>
 								<Trash2
 									className="text-black"
 									onClick={() => {
