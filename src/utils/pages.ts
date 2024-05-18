@@ -13,4 +13,4 @@ export const pages = {
 		icon: FilePlus2,
 		name: "PDF Creator",
 	},
-}
+} as const

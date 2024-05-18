@@ -1,5 +1,4 @@
 ---
-import PdfCreatorComponent from "@/components/PdfCreator"
 import { getLangFromUrl, useTranslations } from "@/i18n/utils"
 import Layout from "@/layouts/Layout.astro"
 
@@ -8,5 +7,5 @@ const t = useTranslations(lang)
 ---
 
 <Layout title={t("index.title")} description={t("index.description")}>
-	<PdfCreatorComponent lang={lang} client:load client:only="react" />
+	<h1>Error</h1>
 </Layout>

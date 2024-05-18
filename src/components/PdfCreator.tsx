@@ -35,7 +35,7 @@ export default function PdfCreatorComponent({ lang }: Props) {
 	const t = useTranslations(lang)
 
 	const arrayPdf: File[] = []
-	const [pdfUrl, setPdfUrl] = useState("")
+	const [pdf, setPdf] = useState("")
 	const [numPagesDoc, setNumPagesDoc] = useState(0)
 	const [pageNumber, setPageNumber] = useState(1)
 	const [pageScale, setPageScale] = useState(1)
@@ -47,16 +47,21 @@ export default function PdfCreatorComponent({ lang }: Props) {
 
 	const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
 		event.preventDefault()
-		if (event.dataTransfer === null || event.dataTransfer.files.length === 0) return
+
 		const droppedFiles = event.dataTransfer.files
-		const newFiles = Array.from(droppedFiles)
-		const newFilesChecked = newFiles.filter(
+
+		if (droppedFiles.length === 0) {
+			return
+		}
+
+		const newFilesChecked = [...droppedFiles].filter(
 			(file) =>
 				file.name.endsWith(".jpeg") ||
 				file.name.endsWith(".jpg") ||
 				file.name.endsWith(".pdf") ||
 				file.name.endsWith(".png")
 		)
+
 		setPdfs(() => {
 			return [...pdfs, ...newFilesChecked]
 		})
@@ -64,19 +69,22 @@ export default function PdfCreatorComponent({ lang }: Props) {
 
 	const addFile = (file: React.ChangeEvent<HTMLInputElement>) => {
 		const droppedFiles = file.currentTarget.files
-		if (droppedFiles !== null) {
-			const newFiles = Array.from(droppedFiles)
-			const newFilesChecked = newFiles.filter(
-				(file) =>
-					file.name.endsWith(".jpeg") ||
-					file.name.endsWith(".jpg") ||
-					file.name.endsWith(".pdf") ||
-					file.name.endsWith(".png")
-			)
-			setPdfs(() => {
-				return [...pdfs, ...newFilesChecked]
-			})
+
+		if (droppedFiles === null) {
+			return
 		}
+
+		const newFilesChecked = [...droppedFiles].filter(
+			(file) =>
+				file.name.endsWith(".jpeg") ||
+				file.name.endsWith(".jpg") ||
+				file.name.endsWith(".pdf") ||
+				file.name.endsWith(".png")
+		)
+
+		setPdfs(() => {
+			return [...pdfs, ...newFilesChecked]
+		})
 	}
 
 	const removeFromList = (pdf: File) => {
@@ -126,15 +134,15 @@ export default function PdfCreatorComponent({ lang }: Props) {
 				color: rgb(0, 0.53, 0.71),
 			})
 		} else {
-			for (const pdf of pdfs) {
-				if (pdf.name.endsWith(".pdf")) {
-					const donorPdfBytes = await pdf.arrayBuffer()
+			const embed = {
+				pdf: async ({ donor, recipient }: { donor: File; recipient: PDFDocument }) => {
+					const donorPdfBytes = await donor.arrayBuffer()
 
 					const donorPdf = await PDFDocument.load(donorPdfBytes)
 					await Promise.all(
 						donorPdf.getPages().map(async (page) => {
-							const newPage = pdfDoc.addPage()
-							const embedPage = await pdfDoc.embedPage(page)
+							const newPage = recipient.addPage()
+							const embedPage = await recipient.embedPage(page)
 
 							const embedPageDims = embedPage.scale(calculateScale(newPage, embedPage))
 							newPage.drawPage(embedPage, {
@@ -144,11 +152,15 @@ export default function PdfCreatorComponent({ lang }: Props) {
 							})
 						})
 					)
-				} else if (pdf.name.endsWith(".png")) {
-					const donorPngBytes = await pdf.arrayBuffer()
+				},
+				images: async ({ donor, recipient }: { donor: File; recipient: PDFDocument }) => {
+					const donorBytes = await donor.arrayBuffer()
 
-					const pngImage = await pdfDoc.embedPng(donorPngBytes)
-					const page = pdfDoc.addPage(PageSizes.A4)
+					const pngImage = await (donor.name.endsWith(".jpg") || donor.name.endsWith(".jpeg")
+						? recipient.embedJpg(donorBytes)
+						: recipient.embedPng(donorBytes))
+
+					const page = recipient.addPage(PageSizes.A4)
 
 					const pngDims = pngImage.scale(calculateScale(page, pngImage))
 
@@ -158,20 +170,14 @@ export default function PdfCreatorComponent({ lang }: Props) {
 						width: pngDims.width,
 						height: pngDims.height,
 					})
-				} else if (pdf.name.endsWith(".jpg") || pdf.name.endsWith(".jpeg")) {
-					const donorJpgBytes = await pdf.arrayBuffer()
+				},
+			}
 
-					const jpgImage = await pdfDoc.embedJpg(donorJpgBytes)
-					const page = pdfDoc.addPage()
-
-					const jpgDims = jpgImage.scale(calculateScale(page, jpgImage))
-
-					page.drawImage(jpgImage, {
-						x: page.getWidth() / 2 - jpgDims.width / 2,
-						y: page.getHeight() / 2 - jpgDims.height / 2,
-						width: jpgDims.width,
-						height: jpgDims.height,
-					})
+			for (const file of pdfs) {
+				if (file.name.endsWith(".pdf")) {
+					await embed.pdf({ donor: file, recipient: pdfDoc })
+				} else {
+					await embed.images({ donor: file, recipient: pdfDoc })
 				}
 			}
 		}
@@ -181,7 +187,7 @@ export default function PdfCreatorComponent({ lang }: Props) {
 				const docUrl = URL.createObjectURL(
 					new Blob([await pdfDoc.save()], { type: "application/pdf" })
 				)
-				setPdfUrl(docUrl)
+				setPdf(docUrl)
 			}
 			void setsetPdfUrl()
 		})
@@ -254,7 +260,7 @@ export default function PdfCreatorComponent({ lang }: Props) {
 				className="relative flex h-full w-full flex-col justify-center gap-4 lg:w-[595.28px] lg:min-w-[595.28px]"
 			>
 				<Document
-					file={pdfUrl}
+					file={pdf}
 					className="h-80 w-full overflow-y-auto overflow-x-hidden rounded-md border-2 border-sky-300 lg:h-full"
 					onLoadSuccess={onDocumentLoadSuccess}
 					loading={<LoadingPdf />}
@@ -280,7 +286,7 @@ export default function PdfCreatorComponent({ lang }: Props) {
 						>
 							{t("pdfCreator.next")}
 						</Button>
-						<a download="JDCONVERT_GENERATED_PDF.pdf" href={pdfUrl}>
+						<a download="JDCONVERT_GENERATED_PDF.pdf" href={pdf}>
 							<Button className="w-full bg-red-400 hover:bg-red-400">
 								{t("pdfCreator.download")}
 							</Button>

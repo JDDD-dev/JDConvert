@@ -24,19 +24,11 @@ const t = useTranslations(lang)
 							<page.icon className="m-1 mb-2 scale-150" name={`${page.name} icon`} />
 						</CardTitle>
 						<CardDescription className="text-2xl font-cardtitle text-gray-800 dark:text-white">
-							{
-								// @ts-expect-error Always OK
-								t(`index.${page.i18n}.title`)
-							}
+							{t(`index.${page.i18n}.title`)}
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
-						<p class="dark:text-gray-300">
-							{
-								// @ts-expect-error Always OK
-								t(`index.${page.i18n}.description`)
-							}
-						</p>
+						<p class="dark:text-gray-300">{t(`index.${page.i18n}.description`)}</p>
 					</CardContent>
 				</a>
 			</Card>
