@@ -19,7 +19,7 @@ import { LoadingPdf } from "@/components/ui/loadingPdf"
 import useSize from "@/lib/hooks"
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-	"pdfjs-dist/build/pdf.worker.min.js",
+	"pdfjs-dist/build/pdf.worker.min.mjs",
 	import.meta.url
 ).toString()
 
