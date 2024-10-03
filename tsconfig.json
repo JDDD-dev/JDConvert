@@ -10,5 +10,5 @@
     "jsxImportSource": "react",
     "allowJs": true
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.astro"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.astro"]
 }
